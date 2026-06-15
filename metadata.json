@@ -1,0 +1,6 @@
+{
+  "name": "AI Study Buddy",
+  "description": "Generate comprehensive study materials, summaries, flashcards, and practice questions from your topic, syllabus, and previous papers using AI.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
