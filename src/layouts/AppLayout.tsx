@@ -24,8 +24,10 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   const isLanding = location.pathname === '/';
   const isPricing = location.pathname === '/pricing';
 
+  const isCollab = location.pathname.startsWith('/collab');
+
   const showSearch = isDashboard;
-  const showDashboardNav = isDashboard;
+  const showDashboardNav = isDashboard || isCollab;
 
   return (
     <div className="min-h-screen flex flex-col font-sans bg-[#050505] text-white selection:bg-indigo-500/30">
@@ -192,28 +194,30 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* Modern Footer */}
-      <footer className="py-8 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between border-t border-white/5 bg-[#050505]/50 backdrop-blur-md text-xs font-bold text-slate-500 uppercase tracking-widest gap-4 mt-auto">
-        <div className="flex items-center gap-2">
-           <BrainCircuit className="w-4 h-4 text-indigo-500" />
-           <span>Neural Learn <span className="text-indigo-400 opacity-50 ml-1">v2.1</span></span>
-        </div>
-        <div className="flex flex-wrap items-center gap-4 md:gap-8 justify-center">
-          <Link to="/pricing" className="hover:text-white transition-colors border-b border-transparent hover:border-slate-500 pb-0.5">Pricing</Link>
-          <Link to="/faq" className="hover:text-white transition-colors border-b border-transparent hover:border-slate-500 pb-0.5">FAQ</Link>
-          <Link to="/changelog" className="hover:text-white transition-colors border-b border-transparent hover:border-slate-500 pb-0.5">Changelog</Link>
-          <Link to="/roadmap" className="hover:text-white transition-colors border-b border-transparent hover:border-slate-500 pb-0.5">Roadmap</Link>
-          <button onClick={() => setCookieModalOpen(true)} className="hover:text-white transition-colors border-b border-transparent hover:border-slate-500 pb-0.5">Privacy & Data</button>
-          
-          <div className="w-px h-3 bg-white/20 hidden md:block" />
-          <button 
-            onClick={() => setDeveloperProfileOpen(true)} 
-            className="text-indigo-400 hover:text-indigo-300 transition-colors border-b border-transparent hover:border-indigo-400 pb-0.5 tracking-[0.2em] relative group flex items-center"
-          >
-            DEVELOPED BY ADITYA PAL
-            <span className="absolute -inset-x-2 -inset-y-1 bg-indigo-500/10 opacity-0 group-hover:opacity-100 rounded-lg transition-opacity -z-10" />
-          </button>
-        </div>
-      </footer>
+      {!isCollab && (
+        <footer className="py-8 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between border-t border-white/5 bg-[#050505]/50 backdrop-blur-md text-xs font-bold text-slate-500 uppercase tracking-widest gap-4 mt-auto">
+          <div className="flex items-center gap-2">
+             <BrainCircuit className="w-4 h-4 text-indigo-500" />
+             <span>Neural Learn <span className="text-indigo-400 opacity-50 ml-1">v2.1</span></span>
+          </div>
+          <div className="flex flex-wrap items-center gap-4 md:gap-8 justify-center">
+            <Link to="/pricing" className="hover:text-white transition-colors border-b border-transparent hover:border-slate-500 pb-0.5">Pricing</Link>
+            <Link to="/faq" className="hover:text-white transition-colors border-b border-transparent hover:border-slate-500 pb-0.5">FAQ</Link>
+            <Link to="/changelog" className="hover:text-white transition-colors border-b border-transparent hover:border-slate-500 pb-0.5">Changelog</Link>
+            <Link to="/roadmap" className="hover:text-white transition-colors border-b border-transparent hover:border-slate-500 pb-0.5">Roadmap</Link>
+            <button onClick={() => setCookieModalOpen(true)} className="hover:text-white transition-colors border-b border-transparent hover:border-slate-500 pb-0.5">Privacy & Data</button>
+            
+            <div className="w-px h-3 bg-white/20 hidden md:block" />
+            <button 
+              onClick={() => setDeveloperProfileOpen(true)} 
+              className="text-indigo-400 hover:text-indigo-300 transition-colors border-b border-transparent hover:border-indigo-400 pb-0.5 tracking-[0.2em] relative group flex items-center"
+            >
+              DEVELOPED BY ADITYA PAL
+              <span className="absolute -inset-x-2 -inset-y-1 bg-indigo-500/10 opacity-0 group-hover:opacity-100 rounded-lg transition-opacity -z-10" />
+            </button>
+          </div>
+        </footer>
+      )}
       <DeveloperProfileModal />
     </div>
   );

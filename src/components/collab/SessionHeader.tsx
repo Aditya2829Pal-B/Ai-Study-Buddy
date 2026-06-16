@@ -21,8 +21,8 @@ export const SessionHeader = memo(function SessionHeader({
   handleSendInvite
 }: SessionHeaderProps) {
   return (
-    <div className="w-full max-w-[1600px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 mb-8 z-20 relative">
-      <Link to="/" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors shrink-0">
+    <div className="w-full max-w-[1800px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4 mb-4 z-20 relative shrink-0">
+      <Link to="/app" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors shrink-0">
         <ArrowLeft className="w-5 h-5" /> Back to Studio
       </Link>
       

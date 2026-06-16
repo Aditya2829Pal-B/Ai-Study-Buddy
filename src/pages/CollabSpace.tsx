@@ -160,7 +160,7 @@ export function CollabSpace() {
   }, []);
 
   return (
-    <div className={cn("min-h-screen px-6 pb-12 flex flex-col items-center bg-[#050505] transition-all duration-500", isFullscreenCanvas ? "pt-8" : "pt-8")}>
+    <div className="min-h-[calc(100vh-80px)] xl:h-[calc(100vh-80px)] flex flex-col items-center bg-[#050505] xl:overflow-hidden p-4 pb-12 xl:pb-4">
       
       {/* Header Area - Clean Flex Layout */}
       <SessionHeader
@@ -171,27 +171,22 @@ export function CollabSpace() {
         handleSendInvite={handleSendInvite}
       />
 
-      <div className="w-full max-w-[1600px] mx-auto space-y-8 relative">
-        {/* Mobile Title View */}
-        <div className={cn("text-center space-y-2 mb-8 md:hidden transition-all duration-500", isFullscreenCanvas && "hidden")}>
-          <h1 className="text-4xl font-black tracking-tighter leading-tight text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-indigo-500 to-emerald-500 animate-text-move bg-[length:200%_auto]">
-            Collab Space
-          </h1>
-          <p className="text-slate-400 text-sm font-medium mx-auto">
-             Co-write & sketch in real-time.
-          </p>
-        </div>
-
-        <div className={cn("flex flex-col xl:flex-row gap-6 items-start w-full", isFullscreenCanvas && "xl:flex-col")}>
-          
-          {/* Text Editor (Novel / Blog Diary) */}
+      <div className="flex-1 w-full max-w-[1800px] mx-auto flex flex-col xl:flex-row gap-4 xl:overflow-hidden">
+        
+        {/* Left Side: Notes & Editor */}
+        <div className={cn(
+          "flex flex-col xl:flex-1 w-full xl:max-w-[450px] transition-all duration-500 h-[500px] xl:h-auto",
+          isFullscreenCanvas ? "hidden" : ""
+        )}>
           <NotesEditor 
             text={text} 
             handleTextChange={handleTextChange} 
             isFullscreenCanvas={isFullscreenCanvas} 
           />
+        </div>
 
-          {/* Sketch Board */}
+        {/* Center Side: Sketch Board */}
+        <div className="flex-1 flex flex-col bg-[#0A0A0A] border border-white/10 rounded-[2rem] shadow-2xl relative xl:overflow-hidden h-[500px] xl:h-auto min-h-[500px]">
           <Whiteboard
             lines={lines}
             tool={tool}
@@ -209,8 +204,13 @@ export function CollabSpace() {
             handleMouseMove={handleMouseMove}
             handleMouseUp={handleMouseUp}
           />
+        </div>
 
-          {/* Live Chat Sidebar */}
+        {/* Right Side: Live Chat Sidebar */}
+        <div className={cn(
+          "flex flex-col w-full xl:w-[320px] transition-all duration-500 h-[500px] xl:h-auto",
+          isFullscreenCanvas ? "hidden" : ""
+        )}>
           <ChatPanel 
             chatMessages={chatMessages} 
             chatInput={chatInput} 
@@ -219,6 +219,7 @@ export function CollabSpace() {
             isFullscreenCanvas={isFullscreenCanvas} 
           />
         </div>
+
       </div>
     </div>
   );

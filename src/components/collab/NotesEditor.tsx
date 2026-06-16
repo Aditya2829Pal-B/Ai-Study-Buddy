@@ -101,7 +101,7 @@ export const NotesEditor = memo(function NotesEditor({ text, handleTextChange, i
   }, []);
 
   return (
-    <div className={cn("w-full xl:w-[320px] shrink-0 bg-[#0A0A0A] border border-white/10 rounded-[2rem] p-6 flex flex-col shadow-2xl relative transition-all duration-500", isFullscreenCanvas ? "hidden" : "h-[600px]")}>
+    <div className={cn("w-full h-full bg-[#0A0A0A] border border-white/10 rounded-[2rem] p-6 flex flex-col shadow-2xl relative transition-all duration-500", isFullscreenCanvas ? "hidden" : "")}>
        <div className="flex items-center justify-between mb-4 pb-4 border-b border-white/5 shrink-0">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-indigo-500/10 rounded-xl">

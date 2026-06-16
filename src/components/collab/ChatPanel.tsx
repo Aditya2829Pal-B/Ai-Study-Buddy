@@ -22,7 +22,7 @@ export const ChatPanel = memo(function ChatPanel({ chatMessages, chatInput, setC
   }, [chatMessages]);
 
   return (
-    <div className={cn("w-full xl:w-[320px] shrink-0 bg-[#0A0A0A] border border-white/10 rounded-[2rem] flex flex-col shadow-2xl relative transition-all duration-500 overflow-hidden", isFullscreenCanvas ? "h-[400px] xl:h-[85vh] xl:min-h-0" : "h-[600px]")}>
+    <div className={cn("w-full h-full bg-[#0A0A0A] border border-white/10 rounded-[2rem] flex flex-col shadow-2xl relative transition-all duration-500 overflow-hidden", isFullscreenCanvas ? "hidden" : "")}>
       <div className="p-6 border-b border-white/5 bg-[#111]">
          <h3 className="text-white font-bold tracking-tight">Live Chat</h3>
          <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mt-1">Study Questions</p>

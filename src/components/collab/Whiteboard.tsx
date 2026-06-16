@@ -40,7 +40,7 @@ export const Whiteboard = memo(function Whiteboard({
   handleMouseUp
 }: WhiteboardProps) {
   return (
-    <div className={cn("flex-1 w-full bg-[#0A0A0A] border border-white/10 rounded-[2rem] p-6 flex flex-col shadow-2xl relative transition-all duration-500", isFullscreenCanvas ? "h-[85vh]" : "h-[600px]")}>
+    <div className={cn("w-full h-full p-6 flex flex-col relative transition-all duration-500")}>
       <div className="flex flex-wrap items-center justify-between gap-4 mb-4 pb-4 border-b border-white/5 shrink-0">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-pink-500/10 rounded-xl">
