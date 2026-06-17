@@ -11,6 +11,7 @@ import { MaterialResult } from '../features/materials/MaterialResult';
 import { StudyProgress } from '../features/dashboard/StudyProgress';
 import { RecentActivity } from '../features/dashboard/RecentActivity';
 import { SessionHistoryView } from '../features/dashboard/SessionHistoryView';
+import { StreakTracker } from '../features/dashboard/StreakTracker';
 
 export function Home() {
   const { view } = useDashboardStore();
@@ -57,6 +58,7 @@ export function Home() {
             <LibraryView key="library" />
           ) : !result ? (
             <div key="setup" className="w-full flex flex-col mt-8">
+              <StreakTracker />
               <StudyProgress />
               <RecentActivity />
               <MaterialSetup onGenerating={setShowLoadingOverlay} />
