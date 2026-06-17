@@ -13,7 +13,14 @@ interface MaterialSetupProps {
 
 export function MaterialSetup({ onGenerating }: MaterialSetupProps) {
   const { user, setAuthModalOpen } = useAuthStore();
-  const { topic, setTopic, academicLevel, setAcademicLevel, setResult } = useMaterialStore();
+  const { 
+    topic, setTopic, 
+    academicLevel, setAcademicLevel, 
+    setResult,
+    summaryLength, setSummaryLength,
+    questionDifficulty, setQuestionDifficulty,
+    flashcardFormat, setFlashcardFormat
+  } = useMaterialStore();
   const { addSession } = useHistoryStore();
 
   const [syllabus, setSyllabus] = useState<File[]>([]);
@@ -49,7 +56,10 @@ export function MaterialSetup({ onGenerating }: MaterialSetupProps) {
           topic, 
           syllabus: syllabusData, 
           papers: papersData,
-          level: academicLevel
+          level: academicLevel,
+          summaryLength,
+          questionDifficulty,
+          flashcardFormat
         }),
       });
 
@@ -125,16 +135,62 @@ export function MaterialSetup({ onGenerating }: MaterialSetupProps) {
           </div>
         </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+          <div className="space-y-3">
+            <label className="text-xs font-semibold text-slate-400 uppercase tracking-widest flex items-center gap-2">
+              <span className="text-indigo-400 font-bold">03</span> / Summary Length
+            </label>
+            <select
+              value={summaryLength}
+              onChange={(e) => setSummaryLength(e.target.value as any)}
+              className="w-full bg-black/40 backdrop-blur-md border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-400/50 transition-all font-medium appearance-none"
+            >
+              <option value="short">Short (Concise)</option>
+              <option value="medium">Medium (Balanced)</option>
+              <option value="detailed">Detailed (In-depth)</option>
+            </select>
+          </div>
+          
+          <div className="space-y-3">
+            <label className="text-xs font-semibold text-slate-400 uppercase tracking-widest flex items-center gap-2">
+              <span className="text-indigo-400 font-bold">04</span> / Question Difficulty
+            </label>
+            <select
+              value={questionDifficulty}
+              onChange={(e) => setQuestionDifficulty(e.target.value as any)}
+              className="w-full bg-black/40 backdrop-blur-md border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-400/50 transition-all font-medium appearance-none"
+            >
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+          
+          <div className="space-y-3">
+            <label className="text-xs font-semibold text-slate-400 uppercase tracking-widest flex items-center gap-2">
+              <span className="text-indigo-400 font-bold">05</span> / Flashcard Format
+            </label>
+            <select
+              value={flashcardFormat}
+              onChange={(e) => setFlashcardFormat(e.target.value as any)}
+              className="w-full bg-black/40 backdrop-blur-md border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-400/50 transition-all font-medium appearance-none"
+            >
+              <option value="term-definition">Term & Definition</option>
+              <option value="question-answer">Question & Answer</option>
+            </select>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
           <UploadZone
             id="syllabus-upload"
-            label="03 / Syllabus Graph"
+            label="06 / Syllabus Graph"
             files={syllabus}
             onFilesChange={setSyllabus}
           />
           <UploadZone
             id="papers-upload"
-            label="04 / Previous Exams"
+            label="07 / Previous Exams"
             files={papers}
             onFilesChange={setPapers}
             multiple

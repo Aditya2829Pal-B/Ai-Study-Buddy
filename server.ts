@@ -243,7 +243,7 @@ async function startServer() {
 
   // API Route: Generate Study Material
   app.post("/api/generate", async (req, res) => {
-    const { topic, syllabus, papers, level } = req.body;
+    const { topic, syllabus, papers, level, summaryLength, questionDifficulty, flashcardFormat } = req.body;
 
     if (!topic) {
       return res.status(400).json({ error: "Topic is required" });
@@ -253,14 +253,17 @@ async function startServer() {
       const prompt = `
         You are an elite academic assistant. Create a comprehensive study kit for the topic: "${topic}".
         Target Academic Level: ${level || 'Undergraduate'}
+        Summary Detail Level: ${summaryLength || 'medium'} (Adjust the depth of descriptions in the roadmap accordingly to be ${summaryLength})
+        Practice Question Difficulty: ${questionDifficulty || 'medium'} (Formulate the practice questions to be ${questionDifficulty})
+        Flashcard Format: ${flashcardFormat || 'term-definition'} (If term-definition, put term on front and definition on back. If question-answer, put question on front and answer on back)
         
         ${syllabus ? "Use the provided syllabus for context on depth and scope." : ""}
         ${papers ? "Focus on the patterns and styles found in the provided previous question papers." : ""}
         
         Generate the following in a structured JSON format:
-        1. "roadmap": A step-by-step sequential learning timeline representing the syllabus or topic. It must be broken down into structured, bite-sized study modules. For each module, provide a title, a brief description, an estimated duration, and a list of key topics.
-        2. "flashcards": A list of at least 10 flashcards (front: question/concept, back: answer/explanation).
-        3. "practiceQuestions": A list of at least 15 practice questions. Include 5 Multiple Choice (with options and correct answer), 5 Short Answer, and 5 Detailed/Essay type questions. For MCQs, MUST provide the 0-based index of the correct option as "correctOptionIndex".
+        1. "roadmap": A step-by-step sequential learning timeline representing the syllabus or topic. It must be broken down into structured, bite-sized study modules. For each module, provide a title, a brief description (detail level: ${summaryLength}), an estimated duration, and a list of key topics.
+        2. "flashcards": A list of at least 10 flashcards matching the ${flashcardFormat} format.
+        3. "practiceQuestions": A list of at least 15 practice questions scaled to a ${questionDifficulty} difficulty level. Include 5 Multiple Choice (with options and correct answer), 5 Short Answer, and 5 Detailed/Essay type questions. For MCQs, MUST provide the 0-based index of the correct option as "correctOptionIndex".
         4. "sources": A list of 3-5 high-quality external web resources (URL and description) for further reading (e.g., Wikipedia, Khan Academy, MIT OCW).
         
         Ensure the output is strictly tailored to the requested academic level.
