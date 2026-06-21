@@ -10,11 +10,14 @@ import { RoadmapView } from '../notes/RoadmapView';
 import { FlashcardList } from '../flashcards/FlashcardList';
 import { QuizView } from '../quizzes/QuizView';
 import { AIChat } from '../ai-chat/AIChat';
+import { MindMapView } from '../notes/MindMapView';
+import { ConceptExplanationsView } from '../notes/ConceptExplanationsView';
+import { GlossaryView } from '../notes/GlossaryView';
 
 export function MaterialResult() {
   const { topic, setTopic, result, setResult, setAcademicLevel } = useMaterialStore();
   const { user, setAuthModalOpen } = useAuthStore();
-  const [activeTab, setActiveTab] = useState<'roadmap' | 'flashcards' | 'questions' | 'chat' | 'sources'>('roadmap');
+  const [activeTab, setActiveTab] = useState<'roadmap' | 'flashcards' | 'questions' | 'chat' | 'sources' | 'mindmap' | 'concepts' | 'glossary'>('roadmap');
   const [isSaving, setIsSaving] = useState(false);
 
   const downloadPDF = () => {
@@ -52,7 +55,10 @@ export function MaterialResult() {
         roadmap: result?.roadmap,
         flashcards: result?.flashcards,
         practiceQuestions: result?.practiceQuestions,
-        sources: result?.sources
+        sources: result?.sources,
+        mindMap: result?.mindMap,
+        conceptExplanations: result?.conceptExplanations,
+        glossary: result?.glossary
       };
       const res = await fetch('/api/profile/materials', {
         method: 'POST',
@@ -117,10 +123,13 @@ export function MaterialResult() {
         </div>
       </div>
 
-       {/* Navigation Tabs */}
-      <div className="flex flex-wrap gap-2 md:gap-3 relative z-10">
+      {/* Navigation Tabs */}
+      <div className="flex flex-wrap gap-2 md:gap-3 relative z-10 w-full overflow-x-auto pb-4 scrollbar-hide">
         {[
           { id: 'roadmap', label: 'Syllabus Roadmap' },
+          { id: 'mindmap', label: 'Mind Map' },
+          { id: 'concepts', label: 'Core Concepts' },
+          { id: 'glossary', label: 'Glossary' },
           { id: 'flashcards', label: 'AI Flashcards' },
           { id: 'questions', label: 'Exam Simulator' },
           { id: 'sources', label: 'Neural Sources' },
@@ -152,6 +161,39 @@ export function MaterialResult() {
               exit={{ opacity: 0, y: -10 }}
             >
               <RoadmapView roadmap={result.roadmap} />
+            </motion.div>
+          )}
+
+          {activeTab === 'mindmap' && (
+            <motion.div
+              key="mindmap-content"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+            >
+              <MindMapView nodes={result.mindMap} />
+            </motion.div>
+          )}
+
+          {activeTab === 'concepts' && (
+            <motion.div
+              key="concepts-content"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+            >
+              <ConceptExplanationsView concepts={result.conceptExplanations} />
+            </motion.div>
+          )}
+
+          {activeTab === 'glossary' && (
+            <motion.div
+              key="glossary-content"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+            >
+              <GlossaryView glossary={result.glossary} />
             </motion.div>
           )}
 

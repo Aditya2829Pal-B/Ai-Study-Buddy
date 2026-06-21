@@ -21,6 +21,9 @@ db.exec(`
     flashcards TEXT,
     practiceQuestions TEXT,
     sources TEXT,
+    mindMap TEXT,
+    conceptExplanations TEXT,
+    glossary TEXT,
     created_at TEXT
   );
 
@@ -60,9 +63,18 @@ export function saveRoomStateToDb(roomId: string, state: { text: string, lines: 
 }
 
 export function saveUserMaterial(userId: string, material: any) {
+  // If altering an existing table in SQLite, we should ideally use ALTER TABLE or catch errors, but we rely on IF NOT EXISTS or new DB. For a dev environment, sqliteDb might fail if the table exists without these columns. Let's just catch and alter if possible, or assume it's created fresh. Wait, it's a dev applet, we should probably add try/catch alter tables just in case, but let's stick to simple insert. 
+  try {
+    db.exec(`ALTER TABLE user_materials ADD COLUMN mindMap TEXT`);
+    db.exec(`ALTER TABLE user_materials ADD COLUMN conceptExplanations TEXT`);
+    db.exec(`ALTER TABLE user_materials ADD COLUMN glossary TEXT`);
+  } catch (e) {
+    // Columns might already exist
+  }
+
   const stmt = db.prepare(`
-    INSERT INTO user_materials (id, user_id, topic, roadmap, flashcards, practiceQuestions, sources, created_at)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO user_materials (id, user_id, topic, roadmap, flashcards, practiceQuestions, sources, mindMap, conceptExplanations, glossary, created_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
   stmt.run(
     crypto.randomUUID ? crypto.randomUUID() : (Math.random().toString(36).substring(2) + Date.now().toString(36)),
@@ -72,20 +84,35 @@ export function saveUserMaterial(userId: string, material: any) {
     JSON.stringify(material.flashcards || []),
     JSON.stringify(material.practiceQuestions || []),
     JSON.stringify(material.sources || []),
+    JSON.stringify(material.mindMap || []),
+    JSON.stringify(material.conceptExplanations || []),
+    JSON.stringify(material.glossary || []),
     new Date().toISOString()
   );
 }
 
 export function getUserMaterials(userId: string) {
-  return db.prepare('SELECT * FROM user_materials WHERE user_id = ? ORDER BY created_at DESC').all(userId).map((row: any) => ({
-    id: row.id,
-    topic: row.topic,
-    roadmap: JSON.parse(row.roadmap),
-    flashcards: JSON.parse(row.flashcards),
-    practiceQuestions: JSON.parse(row.practiceQuestions),
-    sources: JSON.parse(row.sources),
-    createdAt: row.created_at
-  }));
+  return db.prepare('SELECT * FROM user_materials WHERE user_id = ? ORDER BY created_at DESC').all(userId).map((row: any) => {
+    let mindMap = [];
+    let conceptExplanations = [];
+    let glossary = [];
+    try { mindMap = JSON.parse(row.mindMap); } catch (e) {}
+    try { conceptExplanations = JSON.parse(row.conceptExplanations); } catch (e) {}
+    try { glossary = JSON.parse(row.glossary); } catch (e) {}
+    
+    return {
+      id: row.id,
+      topic: row.topic,
+      roadmap: JSON.parse(row.roadmap),
+      flashcards: JSON.parse(row.flashcards),
+      practiceQuestions: JSON.parse(row.practiceQuestions),
+      sources: JSON.parse(row.sources),
+      mindMap,
+      conceptExplanations,
+      glossary,
+      createdAt: row.created_at
+    };
+  });
 }
 
 export function deleteUserMaterial(userId: string, materialId: string) {

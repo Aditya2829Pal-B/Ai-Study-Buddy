@@ -265,6 +265,9 @@ async function startServer() {
         2. "flashcards": A list of at least 10 flashcards matching the ${flashcardFormat} format.
         3. "practiceQuestions": A list of at least 15 practice questions scaled to a ${questionDifficulty} difficulty level. Include 5 Multiple Choice (with options and correct answer), 5 Short Answer, and 5 Detailed/Essay type questions. For MCQs, MUST provide the 0-based index of the correct option as "correctOptionIndex".
         4. "sources": A list of 3-5 high-quality external web resources (URL and description) for further reading (e.g., Wikipedia, Khan Academy, MIT OCW).
+        5. "mindMap": An array representing a mind map. Each element should have a 'concept' (string) and 'subConcepts' (an array of strings).
+        6. "conceptExplanations": An array of detailed concept explanations. Each element should have a 'concept' (string) and an 'explanation' (string).
+        7. "glossary": An array of key terminology. Each element should have a 'term' (string) and a 'definition' (string).
         
         Ensure the output is strictly tailored to the requested academic level.
       `;

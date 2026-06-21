@@ -133,7 +133,10 @@ export function Profile() {
                       roadmap: mat.roadmap,
                       flashcards: mat.flashcards,
                       practiceQuestions: mat.practiceQuestions,
-                      sources: mat.sources
+                      sources: mat.sources,
+                      mindMap: mat.mindMap,
+                      conceptExplanations: mat.conceptExplanations,
+                      glossary: mat.glossary
                     });
                     useMaterialStore.getState().setTopic(mat.topic);
                     window.location.href = '/app';

@@ -5,6 +5,9 @@ export interface AIServiceResponse {
   flashcards: Array<{ front: string; back: string }>;
   practiceQuestions: Array<{ type: string; question: string; options?: string[]; correctOptionIndex?: number; answer: string }>;
   sources: Array<{ title: string; url: string; description: string }>;
+  mindMap: Array<{ concept: string; subConcepts: string[] }>;
+  conceptExplanations: Array<{ concept: string; explanation: string }>;
+  glossary: Array<{ term: string; definition: string }>;
 }
 
 export type SummaryLength = 'short' | 'medium' | 'detailed';
