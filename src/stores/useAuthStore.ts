@@ -26,7 +26,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   setAuthModalOpen: (isOpen) => set({ isAuthModalOpen: isOpen }),
   checkAuth: async () => {
     try {
-      const res = await fetch('/api/auth/me');
+      const res = await fetch('/api/auth/me', { credentials: 'include' });
       if (res.ok) {
         const data = await res.json();
         set({ user: data.user, isLoading: false });
@@ -39,7 +39,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
   logout: async () => {
     try {
-      await fetch('/api/auth/logout', { method: 'POST' });
+      await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
       set({ user: null });
     } catch (e) {
       console.error(e);

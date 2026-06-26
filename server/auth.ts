@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { readDb, writeDb, UserSchema } from "./db";
@@ -6,6 +6,16 @@ import { randomUUID } from "crypto";
 
 const router = Router();
 const JWT_SECRET = process.env.JWT_SECRET || "SUPER_SECRET_FALLBACK_KEY_2026";
+
+export function setAuthCookie(req: Request, res: Response, token: string) {
+  const isHttps = req.secure || req.headers['x-forwarded-proto'] === 'https';
+  res.cookie("auth_token", token, {
+    httpOnly: true,
+    secure: isHttps,
+    sameSite: isHttps ? "none" : "lax",
+    maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+  });
+}
 
 // Register
 router.post("/register", async (req, res) => {
@@ -36,12 +46,7 @@ router.post("/register", async (req, res) => {
 
     const token = jwt.sign({ userId: newUser.id }, JWT_SECRET, { expiresIn: "7d" });
     
-    res.cookie("auth_token", token, {
-       httpOnly: true,
-       secure: true,
-       sameSite: "none",
-       maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
-    });
+    setAuthCookie(req, res, token);
 
     res.json({ user: { id: newUser.id, email: newUser.email, name: newUser.name } });
   } catch (err: any) {
@@ -65,12 +70,8 @@ router.post("/login", async (req, res) => {
     if (!valid) return res.status(400).json({ error: "Invalid credentials" });
 
     const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: "7d" });
-    res.cookie("auth_token", token, {
-       httpOnly: true,
-       secure: true,
-       sameSite: "none",
-       maxAge: 7 * 24 * 60 * 60 * 1000
-    });
+    
+    setAuthCookie(req, res, token);
 
     res.json({ user: { id: user.id, email: user.email, name: user.name } });
   } catch (err: any) {
@@ -97,10 +98,11 @@ router.get("/me", (req, res) => {
 
 // Logout
 router.post("/logout", (req, res) => {
+  const isHttps = req.secure || req.headers['x-forwarded-proto'] === 'https';
   res.cookie("auth_token", "", { 
      httpOnly: true, 
-     secure: true,
-     sameSite: "none",
+     secure: isHttps,
+     sameSite: isHttps ? "none" : "lax",
      expires: new Date(0) 
   });
   res.json({ success: true });

@@ -1,0 +1,30 @@
+{
+  "users": [
+    {
+      "id": "a8192e9f-d311-4fb9-a9f6-1313045a282b",
+      "email": "test2@example.com",
+      "passwordHash": "$2b$10$GrPcDk.WaG0UcLrii9/zjeaI7vXHqV3KpWlv4rWhKCkCi0JqwkTZG",
+      "name": "test",
+      "authProvider": "local",
+      "createdAt": "2026-06-26T17:54:19.911Z",
+      "isPremium": false
+    },
+    {
+      "id": "b6471617-0c5c-4c31-b93f-d0948d26aa8d",
+      "email": "demo@example.com",
+      "name": "Oauth Demo User",
+      "authProvider": "google",
+      "createdAt": "2026-06-26T17:54:46.993Z",
+      "isPremium": false
+    },
+    {
+      "id": "8d5a1769-f699-4469-bea8-ec27ca02085c",
+      "email": "test3@example.com",
+      "passwordHash": "$2b$10$xnKAv6iBMD2VLAhBy.1KDOH4dCcgjsu20.R2/WTQ5UzTvfUevUjDe",
+      "name": "test",
+      "authProvider": "local",
+      "createdAt": "2026-06-26T17:54:59.280Z",
+      "isPremium": false
+    }
+  ]
+}

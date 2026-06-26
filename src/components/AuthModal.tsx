@@ -33,6 +33,7 @@ export function AuthModal() {
         LoginSchema.parse(formData);
         const res = await fetch('/api/auth/login', {
           method: 'POST',
+          credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: formData.email, password: formData.password })
         });
@@ -44,6 +45,7 @@ export function AuthModal() {
         RegisterSchema.parse(formData);
         const res = await fetch('/api/auth/register', {
           method: 'POST',
+          credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
         });
