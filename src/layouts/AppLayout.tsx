@@ -9,6 +9,7 @@ import { useDashboardStore } from '../stores/useDashboardStore';
 import { useSearchStore } from '../stores/useSearchStore';
 import { useMaterialStore } from '../stores/useMaterialStore';
 import { DeveloperProfileModal } from '../components/DeveloperProfileModal';
+import { StreakBadge } from '../features/dashboard/StreakBadge';
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, logout, setAuthModalOpen } = useAuthStore();
@@ -124,7 +125,9 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           <div className="w-px h-6 bg-white/10 hidden md:block" />
 
           {user ? (
-            <div className="relative">
+            <div className="flex items-center gap-3">
+              <StreakBadge />
+              <div className="relative">
               <button 
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                 className="flex items-center gap-3 hover:scale-105 active:scale-95 transition-all duration-300"
@@ -176,6 +179,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   </>
                 )}
               </AnimatePresence>
+              </div>
             </div>
           ) : (
             <button 
