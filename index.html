@@ -10,6 +10,14 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#050505" />
     <title>Neural Learn - Study with AI</title>
+    <script>
+      window.addEventListener('error', function(e) {
+        document.body.innerHTML += '<div style="color:red; background:white; position:fixed; top:0; left:0; z-index:9999; padding:20px;">' + e.error?.message + ' ' + e.error?.stack + '</div>';
+      });
+      window.addEventListener('unhandledrejection', function(e) {
+        document.body.innerHTML += '<div style="color:red; background:white; position:fixed; top:0; left:0; z-index:9999; padding:20px;">' + e.reason + '</div>';
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>

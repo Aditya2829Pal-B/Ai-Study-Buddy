@@ -22,5 +22,34 @@ export default defineConfig(({mode}) => {
       // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
     },
+    optimizeDeps: {
+      force: true,
+      include: [
+        'react',
+        'react-dom',
+        'react-dom/client',
+        'react/jsx-runtime',
+        'react/jsx-dev-runtime',
+        'react-router-dom',
+        'motion/react',
+        'lucide-react',
+        'zustand',
+        'zustand/middleware',
+        'clsx',
+        'tailwind-merge',
+        'zod',
+        'sonner',
+        'recharts',
+        'socket.io-client',
+        '@tiptap/react',
+        '@tiptap/starter-kit',
+        '@tiptap/extension-highlight',
+        'react-konva',
+        'konva',
+        'jspdf',
+        'react-markdown'
+      ],
+      noDiscovery: true
+    }
   };
 });

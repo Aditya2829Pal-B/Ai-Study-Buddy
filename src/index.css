@@ -23,7 +23,7 @@
     text-rendering: optimizeLegibility;
   }
   body {
-    @apply bg-[#050505] text-slate-100 font-sans selection:bg-indigo-500/30 selection:text-white min-h-screen bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-blend-overlay;
+    @apply bg-[#050505] text-slate-100 font-sans selection:bg-indigo-500/30 selection:text-white min-h-screen bg-blend-overlay;
   }
 }
 

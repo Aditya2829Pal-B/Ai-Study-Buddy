@@ -15,8 +15,6 @@ import { randomUUID } from "crypto";
 import { createServer } from "http";
 import { Server as SocketIOServer } from "socket.io";
 import multer from "multer";
-// @ts-ignore
-import pdfParse from "pdf-parse";
 
 dotenv.config();
 
@@ -131,6 +129,8 @@ async function startServer() {
       }
 
       // Extract text from PDF
+      const pdfParsePkg = await import("pdf-parse");
+      const pdfParse = (pdfParsePkg as any).default || pdfParsePkg;
       const pdfData = await pdfParse(req.file.buffer);
       const text = pdfData.text;
 
@@ -356,9 +356,42 @@ async function startServer() {
                   },
                   required: ["title", "url", "description"]
                 }
+              },
+              mindMap: {
+                type: Type.ARRAY,
+                items: {
+                  type: Type.OBJECT,
+                  properties: {
+                    concept: { type: Type.STRING },
+                    subConcepts: { type: Type.ARRAY, items: { type: Type.STRING } }
+                  },
+                  required: ["concept", "subConcepts"]
+                }
+              },
+              conceptExplanations: {
+                type: Type.ARRAY,
+                items: {
+                  type: Type.OBJECT,
+                  properties: {
+                    concept: { type: Type.STRING },
+                    explanation: { type: Type.STRING }
+                  },
+                  required: ["concept", "explanation"]
+                }
+              },
+              glossary: {
+                type: Type.ARRAY,
+                items: {
+                  type: Type.OBJECT,
+                  properties: {
+                    term: { type: Type.STRING },
+                    definition: { type: Type.STRING }
+                  },
+                  required: ["term", "definition"]
+                }
               }
             },
-            required: ["roadmap", "flashcards", "practiceQuestions", "sources"]
+            required: ["roadmap", "flashcards", "practiceQuestions", "sources", "mindMap", "conceptExplanations", "glossary"]
           }
         }
       });
