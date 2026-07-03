@@ -17,8 +17,8 @@ export function Profile() {
     if (!user) return;
     
     Promise.all([
-      fetch('/api/profile/materials').then(res => res.json()),
-      fetch('/api/profile/uploads').then(res => res.json())
+      fetch('/api/profile/materials', { credentials: 'include' }).then(res => res.json()),
+      fetch('/api/profile/uploads', { credentials: 'include' }).then(res => res.json())
     ]).then(([mats, ups]) => {
       if (Array.isArray(mats)) setMaterials(mats);
       if (Array.isArray(ups)) setUploads(ups);
@@ -27,7 +27,7 @@ export function Profile() {
 
   const handleDeleteMaterial = async (id: string) => {
     try {
-      const res = await fetch(`/api/profile/materials/${id}`, { method: 'DELETE' });
+      const res = await fetch(`/api/profile/materials/${id}`, { method: 'DELETE', credentials: 'include' });
       if (res.ok) {
         setMaterials(materials.filter(m => m.id !== id));
         toast.success("Material deleted");
@@ -49,12 +49,13 @@ export function Profile() {
 
       const res = await fetch("/api/profile/uploads", {
         method: "POST",
+        credentials: 'include',
         body: formData,
       });
 
       if (!res.ok) throw new Error("Upload failed");
       
-      const newUps = await fetch('/api/profile/uploads').then(r => r.json());
+      const newUps = await fetch('/api/profile/uploads', { credentials: 'include' }).then(r => r.json());
       setUploads(newUps);
       toast.success("File uploaded successfully");
     } catch {
@@ -67,7 +68,7 @@ export function Profile() {
 
   const handleDownload = async (id: string, filename: string) => {
     try {
-      const res = await fetch(`/api/profile/uploads/${id}`);
+      const res = await fetch(`/api/profile/uploads/${id}`, { credentials: 'include' });
       const data = await res.json();
       if (data.data) {
         const link = document.createElement("a");

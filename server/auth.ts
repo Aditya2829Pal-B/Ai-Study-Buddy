@@ -8,11 +8,10 @@ const router = Router();
 const JWT_SECRET = process.env.JWT_SECRET || "SUPER_SECRET_FALLBACK_KEY_2026";
 
 export function setAuthCookie(req: Request, res: Response, token: string) {
-  const isHttps = req.secure || req.headers['x-forwarded-proto'] === 'https';
   res.cookie("auth_token", token, {
     httpOnly: true,
-    secure: isHttps,
-    sameSite: isHttps ? "none" : "lax",
+    secure: true,
+    sameSite: "none",
     maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
   });
 }
@@ -98,11 +97,10 @@ router.get("/me", (req, res) => {
 
 // Logout
 router.post("/logout", (req, res) => {
-  const isHttps = req.secure || req.headers['x-forwarded-proto'] === 'https';
   res.cookie("auth_token", "", { 
      httpOnly: true, 
-     secure: isHttps,
-     sameSite: isHttps ? "none" : "lax",
+     secure: true,
+     sameSite: "none",
      expires: new Date(0) 
   });
   res.json({ success: true });

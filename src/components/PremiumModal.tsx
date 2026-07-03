@@ -19,6 +19,7 @@ export const PremiumModal: React.FC<PremiumModalProps> = ({ isOpen, onClose, onS
     try {
       const response = await fetch(`/api/payment/checkout/${provider}`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },

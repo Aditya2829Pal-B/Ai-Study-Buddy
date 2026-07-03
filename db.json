@@ -25,6 +25,24 @@
       "authProvider": "local",
       "createdAt": "2026-06-26T17:54:59.280Z",
       "isPremium": false
+    },
+    {
+      "id": "6a171bb0-3e3c-41c4-b972-bb4a42650bca",
+      "email": "paladityasingh2907@gmail.com",
+      "passwordHash": "$2b$10$XA4rU5T4V303TE8op9szXeaGg26ITcERiVv1kA8Qy9MgTAuWaMnGq",
+      "name": "aditya",
+      "authProvider": "local",
+      "createdAt": "2026-06-27T10:35:40.676Z",
+      "isPremium": false
+    },
+    {
+      "id": "21724f48-8e46-4bf6-9354-b222c908a073",
+      "email": "test_final@example.com",
+      "passwordHash": "$2b$10$W11sUOZ0Ygwj06fzu4jkBuvehE7Fuipr2POjH8oOHo/HikRBzWjfy",
+      "name": "final",
+      "authProvider": "local",
+      "createdAt": "2026-06-27T10:37:55.213Z",
+      "isPremium": false
     }
   ]
 }

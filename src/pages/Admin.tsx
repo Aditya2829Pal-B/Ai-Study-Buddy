@@ -9,7 +9,7 @@ export function Admin() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/admin/stats')
+    fetch('/api/admin/stats', { credentials: 'include' })
       .then(res => {
         if (!res.ok) throw new Error('Not authorized');
         return res.json();

@@ -176,11 +176,10 @@ async function startServer() {
       }
 
       const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: "7d" });
-      const isHttps = req.secure || req.headers['x-forwarded-proto'] === 'https';
       res.cookie("auth_token", token, {
          httpOnly: true,
-         secure: isHttps,
-         sameSite: isHttps ? "none" : "lax",
+         secure: true,
+         sameSite: "none",
          maxAge: 7 * 24 * 60 * 60 * 1000
       });
     }

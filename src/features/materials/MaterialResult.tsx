@@ -62,6 +62,7 @@ export function MaterialResult() {
       };
       const res = await fetch('/api/profile/materials', {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });

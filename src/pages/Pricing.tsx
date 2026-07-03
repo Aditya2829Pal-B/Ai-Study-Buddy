@@ -33,7 +33,7 @@ export function Pricing() {
 
   const handleManageSubscription = async () => {
     try {
-      const res = await fetch('/api/payment/portal/stripe', { method: 'POST' });
+      const res = await fetch('/api/payment/portal/stripe', { method: 'POST', credentials: 'include' });
       const data = await res.json();
       if (data.url) {
         window.location.href = data.url;
