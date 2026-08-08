@@ -9,6 +9,7 @@ import { LibraryView } from '../features/library/LibraryView';
 import { MaterialSetup } from '../features/materials/MaterialSetup';
 import { MaterialResult } from '../features/materials/MaterialResult';
 import { StudyProgress } from '../features/dashboard/StudyProgress';
+import { GoalCompletionChart } from '../features/dashboard/GoalCompletionChart';
 import { RecentActivity } from '../features/dashboard/RecentActivity';
 import { SessionHistoryView } from '../features/dashboard/SessionHistoryView';
 import { StreakTracker } from '../features/dashboard/StreakTracker';
@@ -59,6 +60,7 @@ export function Home() {
           ) : !result ? (
             <div key="setup" className="w-full flex flex-col mt-8">
               <StreakTracker />
+              <GoalCompletionChart />
               <StudyProgress />
               <RecentActivity />
               <MaterialSetup onGenerating={setShowLoadingOverlay} />
