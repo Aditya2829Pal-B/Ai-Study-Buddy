@@ -40,7 +40,7 @@ export const SessionHeader = memo(function SessionHeader({
         <VoiceControls startVoice={startVoice} stopVoice={stopVoice} />
 
         {/* Invite Controls */}
-        <button 
+        <button type="button" 
           onClick={handleSendInvite}
           className={cn(
             "whitespace-nowrap px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-widest flex items-center gap-2 transition-all shadow-xl shrink-0",

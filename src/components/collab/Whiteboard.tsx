@@ -52,10 +52,10 @@ export const Whiteboard = memo(function Whiteboard({
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-1.5 bg-[#111] p-1.5 rounded-xl border border-white/5">
-            <button onClick={() => setTool('pen')} className={cn("p-1.5 rounded-lg transition-colors border", tool === 'pen' ? "bg-indigo-500/20 border-indigo-500/50 text-indigo-300 shadow-sm" : "bg-transparent border-transparent text-slate-400 hover:text-white")}>
+            <button type="button" onClick={() => setTool('pen')} className={cn("p-1.5 rounded-lg transition-colors border", tool === 'pen' ? "bg-indigo-500/20 border-indigo-500/50 text-indigo-300 shadow-sm" : "bg-transparent border-transparent text-slate-400 hover:text-white")}>
               <PenTool className="w-4 h-4" />
             </button>
-            <button onClick={() => setTool('eraser')} className={cn("p-1.5 rounded-lg transition-colors border", tool === 'eraser' ? "bg-pink-500/20 border-pink-500/50 text-pink-300 shadow-sm" : "bg-transparent border-transparent text-slate-400 hover:text-white")}>
+            <button type="button" onClick={() => setTool('eraser')} className={cn("p-1.5 rounded-lg transition-colors border", tool === 'eraser' ? "bg-pink-500/20 border-pink-500/50 text-pink-300 shadow-sm" : "bg-transparent border-transparent text-slate-400 hover:text-white")}>
               <Eraser className="w-4 h-4" />
             </button>
             
@@ -63,7 +63,7 @@ export const Whiteboard = memo(function Whiteboard({
             {tool === 'pen' && (
               <div className="flex items-center gap-1.5 px-2 ml-1 border-l border-white/10">
                  {['#6366f1', '#ec4899', '#10b981', '#f59e0b', '#ffffff'].map(c => (
-                   <button 
+                   <button type="button" 
                      key={c} 
                      onClick={() => setColor(c)} 
                      className={cn("w-4 h-4 rounded-full border-2 transition-transform", color === c ? "border-white scale-125" : "border-transparent opacity-60 hover:opacity-100")}
@@ -75,13 +75,13 @@ export const Whiteboard = memo(function Whiteboard({
 
             <div className="w-px h-5 bg-white/10 mx-1 hidden sm:block" />
 
-            <button onClick={clearCanvas} className="p-1.5 bg-transparent text-rose-400/80 rounded-lg hover:text-rose-400 hover:bg-rose-500/10 transition-colors" title="Clear Canvas">
+            <button type="button" onClick={clearCanvas} className="p-1.5 bg-transparent text-rose-400/80 rounded-lg hover:text-rose-400 hover:bg-rose-500/10 transition-colors" title="Clear Canvas">
               <Trash2 className="w-4 h-4" />
             </button>
-            <button onClick={downloadCanvas} className="p-1.5 bg-transparent text-emerald-400/80 rounded-lg hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" title="Download Image">
+            <button type="button" onClick={downloadCanvas} className="p-1.5 bg-transparent text-emerald-400/80 rounded-lg hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" title="Download Image">
               <Download className="w-4 h-4" />
             </button>
-            <button onClick={() => setIsFullscreenCanvas(!isFullscreenCanvas)} className="p-1.5 bg-transparent text-slate-400 rounded-lg hover:text-white hover:bg-white/5 transition-colors" title="Toggle Fullscreen Canvas">
+            <button type="button" onClick={() => setIsFullscreenCanvas(!isFullscreenCanvas)} className="p-1.5 bg-transparent text-slate-400 rounded-lg hover:text-white hover:bg-white/5 transition-colors" title="Toggle Fullscreen Canvas">
               {isFullscreenCanvas ? <Shrink className="w-4 h-4" /> : <Expand className="w-4 h-4" />}
             </button>
           </div>

@@ -4,22 +4,19 @@ import { usePresenceStore } from '../../stores/collab/usePresenceStore';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useVoiceStore } from '../../stores/collab/useVoiceStore';
 
-interface UserPresenceProps {
-  // If we still want to pass mock data or override, we can. 
-  // For now, let's just grab the active peers from props to keep it stateless or from store.
-  // Actually, we'd better consume the store directly for cleaner architecture.
-}
-
-export function UserPresence({}: UserPresenceProps) {
+export function UserPresence() {
   const { user } = useAuthStore();
   const isVoiceActive = useVoiceStore(state => state.isVoiceActive);
+  const activePeersStore = usePresenceStore(state => state.activePeers);
   
-  // Active Peers State (Mock data from original code)
-  // We can merge this with the presence store later.
   const activePeers = [
-    { id: '1', name: 'Alex M.', avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026024d', isSpeaking: false },
-    { id: '2', name: 'Sarah K.', avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704d', isSpeaking: true },
-    { id: '3', name: user?.name || 'You', avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'User')}&background=6366f1&color=fff`, isSpeaking: isVoiceActive },
+    ...(user ? [{
+      id: user.id || 'me',
+      name: user.name || 'You',
+      avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || 'User')}&background=6366f1&color=fff`,
+      isSpeaking: isVoiceActive
+    }] : []),
+    ...activePeersStore.filter(p => p.id !== user?.id)
   ];
 
   return (

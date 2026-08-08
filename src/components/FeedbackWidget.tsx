@@ -8,20 +8,31 @@ export function FeedbackWidget() {
   const [feedback, setFeedback] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!feedback.trim()) return;
     
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsOpen(false);
-      setFeedback('');
-      toast.success('Thanks for your feedback!', {
-        description: "We'll review it and get back to you if needed."
+    try {
+      const res = await fetch('/api/admin/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ feedback })
       });
-    }, 800);
+      if (res.ok) {
+        setIsOpen(false);
+        setFeedback('');
+        toast.success('Thanks for your feedback!', {
+          description: "We'll review it and get back to you if needed."
+        });
+      } else {
+        toast.error('Failed to submit feedback.');
+      }
+    } catch {
+      toast.error('Failed to submit feedback.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

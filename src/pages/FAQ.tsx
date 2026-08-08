@@ -72,9 +72,9 @@ export function FAQ() {
             <h3 className="text-xl font-bold text-white mb-2">Still have questions?</h3>
             <p className="text-slate-400 font-medium">Can't find the answer you're looking for?</p>
           </div>
-          <button className="px-6 py-3 bg-white text-black font-semibold rounded-xl hover:scale-105 transition-transform flex items-center gap-2">
+          <a href="mailto:support@neurallearn.com" className="px-6 py-3 bg-white text-black font-semibold rounded-xl hover:scale-105 transition-transform flex items-center gap-2">
             <MessageCircle className="w-5 h-5" /> Chat to our team
-          </button>
+          </a>
         </div>
       </div>
     </div>

@@ -85,10 +85,15 @@ export function Pricing() {
           </div>
 
           <button 
-            disabled
-            className="w-full py-4 rounded-full bg-white/[0.05] border border-white/10 text-white font-semibold flex items-center justify-center gap-2 cursor-default"
+            disabled={!!user}
+            onClick={() => {
+              if (!user) {
+                setAuthModalOpen(true);
+              }
+            }}
+            className="w-full py-4 rounded-full bg-white/[0.05] border border-white/10 text-white font-semibold flex items-center justify-center gap-2 disabled:cursor-default"
           >
-            {user && !isPremium ? 'Current Plan' : 'Free Forever'}
+            {user && !isPremium ? 'Current Plan' : (user && isPremium ? 'Downgrade to Free' : 'Sign Up for Free')}
           </button>
         </motion.div>
 

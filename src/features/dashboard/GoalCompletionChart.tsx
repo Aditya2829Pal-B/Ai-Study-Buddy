@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { ComposedChart, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { motion } from 'motion/react';
 import { Activity, Target } from 'lucide-react';
+import { useHistoryStore } from '../../stores/useHistoryStore';
 
-const data = [
+const mockData = [
   { day: 'Mon', studyHours: 2.5, goalCompletion: 80 },
   { day: 'Tue', studyHours: 3.2, goalCompletion: 95 },
   { day: 'Wed', studyHours: 1.5, goalCompletion: 60 },
@@ -14,6 +15,39 @@ const data = [
 ];
 
 export function GoalCompletionChart() {
+  const { sessions } = useHistoryStore();
+  
+  const data = useMemo(() => {
+    if (sessions.length === 0) return mockData;
+    
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const now = new Date();
+    const last7Days = Array.from({ length: 7 }).map((_, i) => {
+      const d = new Date(now);
+      d.setDate(d.getDate() - (6 - i));
+      return {
+        dateString: d.toDateString(),
+        day: days[d.getDay()],
+        studyHours: 0,
+        goalCompletion: 0,
+      };
+    });
+
+    sessions.forEach(session => {
+      const sessionDate = new Date(session.date).toDateString();
+      const dayData = last7Days.find(d => d.dateString === sessionDate);
+      if (dayData) {
+        dayData.studyHours += 0.5; // Arbitrary 0.5 hours per generated material
+      }
+    });
+
+    return last7Days.map(({ day, studyHours }) => {
+       const hours = Math.max(studyHours, 0.5);
+       const goal = Math.min(100, Math.round((hours / 2) * 100)); // Assume 2 hours is the goal
+       return { day, studyHours: hours, goalCompletion: goal };
+    });
+  }, [sessions]);
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}

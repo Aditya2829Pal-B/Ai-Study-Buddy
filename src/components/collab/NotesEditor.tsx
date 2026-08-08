@@ -113,11 +113,11 @@ export const NotesEditor = memo(function NotesEditor({ text, handleTextChange, i
             </div>
           </div>
           <div className="flex items-center gap-2">
-             <button onClick={toggleAudioSummary} title={isPlayingAudio ? "Stop Reading" : "Read Aloud"} className={cn("flex items-center justify-center p-1.5 rounded-full transition", isPlayingAudio ? "bg-rose-500/10 text-rose-400 hover:bg-rose-500/20" : "bg-blue-500/10 text-blue-400 hover:bg-blue-500/20")}>
+             <button type="button" onClick={toggleAudioSummary} title={isPlayingAudio ? "Stop Reading" : "Read Aloud"} className={cn("flex items-center justify-center p-1.5 rounded-full transition", isPlayingAudio ? "bg-rose-500/10 text-rose-400 hover:bg-rose-500/20" : "bg-blue-500/10 text-blue-400 hover:bg-blue-500/20")}>
                {isPlayingAudio ? <StopCircle className="w-4 h-4" /> : <PlayCircle className="w-4 h-4" />}
              </button>
              <input type="file" ref={fileInputRef} accept=".pdf" className="hidden" onChange={handlePdfUpload} />
-             <button title="Upload PDF to summarized notes" disabled={isUploadingPdf} onClick={() => fileInputRef.current?.click()} className="flex items-center justify-center p-1.5 rounded-full bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 transition disabled:opacity-50">
+             <button type="button" title="Upload PDF to summarized notes" disabled={isUploadingPdf} onClick={() => fileInputRef.current?.click()} className="flex items-center justify-center p-1.5 rounded-full bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 transition disabled:opacity-50">
                {isUploadingPdf ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileUp className="w-4 h-4" />}
              </button>
              <span className="flex items-center justify-center p-1.5 rounded-full bg-emerald-400/10" title="Live sync active">
@@ -128,28 +128,28 @@ export const NotesEditor = memo(function NotesEditor({ text, handleTextChange, i
 
        {editor && (
          <div className="flex flex-wrap gap-1.5 mb-3 p-1.5 bg-[#111] border border-white/5 rounded-xl shrink-0">
-           <button onClick={() => editor.chain().focus().toggleBold().run()} className={cn("p-1.5 rounded-lg transition-colors", editor.isActive('bold') ? "bg-white/10 text-white" : "text-slate-400 hover:text-white")}>
+           <button type="button" onClick={() => editor.chain().focus().toggleBold().run()} className={cn("p-1.5 rounded-lg transition-colors", editor.isActive('bold') ? "bg-white/10 text-white" : "text-slate-400 hover:text-white")}>
              <Bold className="w-3.5 h-3.5" />
            </button>
-           <button onClick={() => editor.chain().focus().toggleItalic().run()} className={cn("p-1.5 rounded-lg transition-colors", editor.isActive('italic') ? "bg-white/10 text-white" : "text-slate-400 hover:text-white")}>
+           <button type="button" onClick={() => editor.chain().focus().toggleItalic().run()} className={cn("p-1.5 rounded-lg transition-colors", editor.isActive('italic') ? "bg-white/10 text-white" : "text-slate-400 hover:text-white")}>
              <Italic className="w-3.5 h-3.5" />
            </button>
-           <button onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} className={cn("p-1.5 rounded-lg transition-colors", editor.isActive('heading', { level: 1 }) ? "bg-white/10 text-white" : "text-slate-400 hover:text-white")}>
+           <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} className={cn("p-1.5 rounded-lg transition-colors", editor.isActive('heading', { level: 1 }) ? "bg-white/10 text-white" : "text-slate-400 hover:text-white")}>
              <Heading1 className="w-3.5 h-3.5" />
            </button>
-           <button onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} className={cn("p-1.5 rounded-lg transition-colors", editor.isActive('heading', { level: 2 }) ? "bg-white/10 text-white" : "text-slate-400 hover:text-white")}>
+           <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} className={cn("p-1.5 rounded-lg transition-colors", editor.isActive('heading', { level: 2 }) ? "bg-white/10 text-white" : "text-slate-400 hover:text-white")}>
              <Heading2 className="w-3.5 h-3.5" />
            </button>
-           <button onClick={() => editor.chain().focus().toggleBulletList().run()} className={cn("p-1.5 rounded-lg transition-colors", editor.isActive('bulletList') ? "bg-white/10 text-white" : "text-slate-400 hover:text-white")}>
+           <button type="button" onClick={() => editor.chain().focus().toggleBulletList().run()} className={cn("p-1.5 rounded-lg transition-colors", editor.isActive('bulletList') ? "bg-white/10 text-white" : "text-slate-400 hover:text-white")}>
              <List className="w-3.5 h-3.5" />
            </button>
-           <button onClick={() => editor.chain().focus().toggleOrderedList().run()} className={cn("p-1.5 rounded-lg transition-colors", editor.isActive('orderedList') ? "bg-white/10 text-white" : "text-slate-400 hover:text-white")}>
+           <button type="button" onClick={() => editor.chain().focus().toggleOrderedList().run()} className={cn("p-1.5 rounded-lg transition-colors", editor.isActive('orderedList') ? "bg-white/10 text-white" : "text-slate-400 hover:text-white")}>
              <ListOrdered className="w-3.5 h-3.5" />
            </button>
-           <button onClick={() => editor.chain().focus().toggleCodeBlock().run()} className={cn("p-1.5 rounded-lg transition-colors", editor.isActive('codeBlock') ? "bg-white/10 text-white" : "text-slate-400 hover:text-white")}>
+           <button type="button" onClick={() => editor.chain().focus().toggleCodeBlock().run()} className={cn("p-1.5 rounded-lg transition-colors", editor.isActive('codeBlock') ? "bg-white/10 text-white" : "text-slate-400 hover:text-white")}>
              <Code className="w-3.5 h-3.5" />
            </button>
-           <button onClick={() => editor.chain().focus().toggleHighlight().run()} className={cn("p-1.5 rounded-lg transition-colors", editor.isActive('highlight') ? "bg-yellow-500/20 text-yellow-300" : "text-slate-400 hover:text-yellow-300")}>
+           <button type="button" onClick={() => editor.chain().focus().toggleHighlight().run()} className={cn("p-1.5 rounded-lg transition-colors", editor.isActive('highlight') ? "bg-yellow-500/20 text-yellow-300" : "text-slate-400 hover:text-yellow-300")}>
              <Highlighter className="w-3.5 h-3.5" />
            </button>
          </div>

@@ -4,7 +4,6 @@ type EventCallback = (...args: any[]) => void;
 
 class SocketManager {
   public socket: Socket | null = null;
-  private listeners: Map<string, Set<EventCallback>> = new Map();
   private isConnecting = false;
 
   public connect(): Socket {
@@ -14,6 +13,7 @@ class SocketManager {
 
     if (!this.socket && !this.isConnecting) {
       this.isConnecting = true;
+      
       this.socket = io({
         reconnection: true,
         reconnectionAttempts: Infinity,
@@ -35,36 +35,18 @@ class SocketManager {
         console.error('[SocketManager] Connection Error:', err.message);
         this.isConnecting = false;
       });
-
-      // Forward events to registered listeners
-      this.socket.onAny((obj: any, ...args: any[]) => {
-          const eventName = typeof obj === 'string' ? obj : obj.type || 'unknown_event';
-          const callbacks = this.listeners.get(eventName);
-          if (callbacks) {
-              callbacks.forEach(cb => cb(...args));
-          }
-      });
     }
 
     return this.socket!;
   }
 
   public registerListener(eventName: string, callback: EventCallback) {
-    if (!this.listeners.has(eventName)) {
-      this.listeners.set(eventName, new Set());
-    }
-    this.listeners.get(eventName)!.add(callback);
-    
-    // Fallback: registering directly on socket if onAny is tricky with some payload formats
     if (this.socket) {
-       this.socket.on(eventName, callback);
+      this.socket.on(eventName, callback);
     }
   }
 
   public removeListener(eventName: string, callback: EventCallback) {
-    if (this.listeners.has(eventName)) {
-      this.listeners.get(eventName)!.delete(callback);
-    }
     if (this.socket) {
       this.socket.off(eventName, callback);
     }
@@ -74,7 +56,7 @@ class SocketManager {
     if (!this.socket?.connected) {
       console.warn(`[SocketManager] Emitting ${eventName} while offline`);
     }
-    if(this.socket) {
+    if (this.socket) {
         this.socket.emit(eventName, ...args);
     } else {
         const skt = this.connect();
@@ -88,7 +70,6 @@ class SocketManager {
       this.socket = null;
     }
     this.isConnecting = false;
-    this.listeners.clear();
   }
 }
 

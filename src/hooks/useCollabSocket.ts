@@ -97,9 +97,15 @@ export function useCollabSocket(roomId: string, user: any) {
 
     // Core collaboration events
     const onConnect = () => socketManager.emit('join-collab', roomId);
-    const onCollabState = (state: { text: string, lines: DrawLine[] }) => {
+    const onCollabState = (state: { text: string, lines: DrawLine[], chat?: any[] }) => {
       setText(state.text);
       setLines(state.lines);
+      if (state.chat && state.chat.length > 0) {
+        setChatMessages([
+          { id: '1', sender: 'System', text: 'Welcome to the Collab Space! Share the link to invite others.', time: new Date() },
+          ...state.chat
+        ]);
+      }
     };
     const onTextUpdated = (newText: string) => setText(newText);
     const onLineDrawn = (newLine: DrawLine) => addLine(newLine);

@@ -36,7 +36,7 @@ async function startServer() {
   
   // Socket.IO Setup
   const io = new SocketIOServer(httpServer, {
-    cors: { origin: "*", methods: ["GET", "POST"] }
+    cors: { origin: "*", methods: ["GET", "POST"] }, pingInterval: 10000, pingTimeout: 5000
   });
 
   const roomStates: Record<string, { text: string, lines: any[], chat?: any[] }> = {};
@@ -53,9 +53,6 @@ async function startServer() {
         }
       }
       socket.emit("collab-state", roomStates[roomId]);
-      if (roomStates[roomId].chat && roomStates[roomId].chat!.length > 0) {
-         roomStates[roomId].chat!.forEach(msg => socket.emit("chat-message", msg));
-      }
     });
 
     socket.on("update-text", ({ roomId, text }) => {

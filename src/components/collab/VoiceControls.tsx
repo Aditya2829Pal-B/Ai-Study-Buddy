@@ -13,7 +13,7 @@ export function VoiceControls({ startVoice, stopVoice }: VoiceControlsProps) {
 
   if (isVoiceActive) {
     return (
-      <button 
+      <button type="button" 
         onClick={stopVoice}
         className="whitespace-nowrap px-4 py-2 bg-rose-500/10 border border-rose-500/30 text-rose-400 rounded-xl font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:bg-rose-500/20 transition-all shrink-0"
       >
@@ -23,7 +23,7 @@ export function VoiceControls({ startVoice, stopVoice }: VoiceControlsProps) {
   }
 
   return (
-    <button 
+    <button type="button" 
       onClick={startVoice}
       className="whitespace-nowrap px-4 py-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-xl font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:bg-emerald-500/20 transition-all hover:scale-105 shrink-0"
     >

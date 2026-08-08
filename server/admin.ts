@@ -74,3 +74,11 @@ router.get("/stats", authenticateAdmin, (req, res) => {
 });
 
 export default router;
+
+// Submit Feedback
+router.post("/feedback", (req, res) => {
+  const { feedback, userId } = req.body;
+  // Just log it for now
+  console.log(`[Feedback] from ${userId || 'anonymous'}: ${feedback}`);
+  res.json({ success: true });
+});
